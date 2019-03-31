@@ -72,3 +72,5 @@ typings/
 *.lk
 *.zip
 
+# Passwords
+.env
