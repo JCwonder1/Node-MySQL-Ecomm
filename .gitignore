@@ -59,3 +59,16 @@ typings/
 
 # next.js build output
 .next
+
+# Mac file
+.DS_Store
+
+# Jetstorm File
+.idea/
+
+*.dmb
+*.rsc
+*.int
+*.lk
+*.zip
+
