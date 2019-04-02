@@ -9,12 +9,20 @@ function DB (db_settings){
 
 };
 
-DB.prototype.getAllProducts = function(connection){
+DB.prototype.getAllProducts = function(){
     return query = "SELECT * FROM products";
+};
+
+DB.prototype.getProductByProductName = function(productSelected){
+
+    return query = `SELECT * FROM products WHERE product_name = "${productSelected}"`;
+};
+
+DB.prototype.reduceInventoryById = function(id, newQuantity){
+    //console.log(newQuantity);
+    return query = `UPDATE products SET stock_quantity = "${newQuantity}" WHERE item_id = "${id}"`;
+
 }
-
-
-
 
 
 
