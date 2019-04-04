@@ -1,0 +1,25 @@
+{
+  "name": "node-ecommerce",
+  "version": "1.0.0",
+  "description": "Node/MySQL CLI ecommerce platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JCwonder1/Node-MySQL-Ecomm.git"
+  },
+  "author": "Joseph Cannova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JCwonder1/Node-MySQL-Ecomm/issues"
+  },
+  "homepage": "https://github.com/JCwonder1/Node-MySQL-Ecomm#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "dotenv": "^7.0.0",
+    "inquirer": "^6.2.2",
+    "mysql": "^2.16.0"
+  }
+}
