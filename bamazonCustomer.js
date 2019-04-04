@@ -42,7 +42,7 @@ function welcomeScreen(){
 
 
 function displayProduct(productArray){
-
+    productArray.push("Leave Store");
     inquirer.prompt([{
     type: "list",
     message: "Please select a product",
@@ -54,6 +54,10 @@ function displayProduct(productArray){
 }
 
 function productSelected(productSelected){
+    if (productSelected = "Leave Store") {
+        connection.end();
+        process.exit();
+    }
     let query = db.getProductByProductName(productSelected);
     
     connection.query(query, (err, res)=>{
