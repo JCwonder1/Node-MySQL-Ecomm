@@ -9,5 +9,6 @@ CREATE TABLE products(
     department_name VARCHAR(40),
     price decimal(10,2),
     stock_quantity int(10)
-
 );
+
+

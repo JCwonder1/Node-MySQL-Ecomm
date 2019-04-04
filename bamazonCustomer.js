@@ -50,7 +50,8 @@ function displayProduct(productArray){
     name: "userSelection"
     }]).then(function (res){
         productSelected(res.userSelection);
-    })
+
+    });
 }
 
 function productSelected(productSelected){
