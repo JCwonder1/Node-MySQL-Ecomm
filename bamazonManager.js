@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
 })
 
 
-
+function welcomeMessage(){
 inquirer.prompt([{
     type: "list",
     message: "Please select a product",
@@ -29,25 +29,44 @@ inquirer.prompt([{
 }]).then(function (res) {
     productSelected(res.userSelection);
 });
-
+}
 
 function productSelected(productSelected) {
     switch(productSelected){
-        case productSelected === "View Products for Sale":
-            console.log("View Products")
+        case "View Products for Sale":
+            connection.query(db.getAllProducts(), (err, res)=>{
+                if (err) throw err;
+                res.forEach(element => {
+                    console.log(`ID: ${element.item_id} || Product Name: ${element.product_name} || Price: ${element.price} || Stock Qty: ${element.stock_quantity}`);
+
+                });
+                welcomeMessage();
+            })
         break;
-        case productSelected === "View Low Inventory":
-            console.log("View Low Inventory")
+        case "View Low Inventory":
+            connection.query(db.getAllProducts(), (err, res) => {
+                if (err) throw err;
+                console.log("Low Inventory:")
+                res.forEach(element => {
+                    if(element.stock_quantity <= 2){
+                    console.log(`ID: ${element.item_id} || Product Name: ${element.product_name} || Price: ${element.price} || Stock Qty: ${element.stock_quantity}`);
+                    }
+
+                });
+                welcomeMessage();
+            })
         break;
         case productSelected === "Add to Inventory":
-            console.log("Add to Inventory")
+            
         break;
         case productSelected === "Add New Produce":
             console.log("Add New Produce")
         break;
-        case productSelected === "Exit":
-            console.log("Exit")
+        case "Exit":
+            process.exit();
         break;
     }
 
 }
+
+welcomeMessage();
