@@ -4,6 +4,8 @@ const inquirer = require("inquirer");
 const db_functions = require("./assets/DB_Functions");
 const mysql = require("mysql");
 const chalk = require('chalk');
+const custFunctions = require('./bamazonCustomer');
+
 
 const db = new db_functions(keys);
 
@@ -13,7 +15,7 @@ const connection = mysql.createConnection({
     user: db.user,
     password: db.pass,
     database: db.database
-})
+});
 
 
 function welcomeMessage(){
@@ -29,7 +31,7 @@ inquirer.prompt([{
 }]).then(function (res) {
     productSelected(res.userSelection);
 });
-}
+};
 
 function productSelected(productSelected) {
     switch(productSelected){
@@ -67,6 +69,44 @@ function productSelected(productSelected) {
         break;
     }
 
-}
+};
 
 welcomeMessage();
+
+function addToInventory(){
+    let query = db.getAllProducts();
+    connection.query(query, (err, data) => {
+        if (err) throw err;
+        let promptChoices = [];
+        data.forEach(element => {
+            promptChoices.push(element.product_name);
+
+        });
+
+        selectProduct(promptChoices);
+
+    })
+
+};
+
+function selectProduct(promptChoices){
+    let {Id: item_id, Product: product_name} = promptChoices;
+    inquirer.prompt([{
+        type: "list",
+        message: "Which product would you like to add inventory to?",
+        choices: promptChoices,
+        name: userSelection
+    }]).then(res=>{
+        addToInventory(res.name);
+    })
+};
+
+function addInventory(productName){
+    inquirer.prompt([{
+        type: "input",
+        message: "How many would you like to add?",
+        name: qtyToAdd
+    }]).then(res=>{
+        
+    })
+};
