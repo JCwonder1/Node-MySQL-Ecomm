@@ -54,7 +54,7 @@ function displayProduct(productArray){
 }
 
 function productSelected(productSelected){
-    if (productSelected = "Leave Store") {
+    if (productSelected === "Leave Store") {
         connection.end();
         process.exit();
     }
@@ -94,7 +94,7 @@ function quantitySelected(productInfo){
 
 function orderConfirmation(product, qty){
     let newQuantity = product.stock_quantity - qty;
-    let query = db.reduceInventoryById(product.item_id, newQuantity);
+    let query = db.updateInventoryById(product.item_id, newQuantity);
     connection.query(query, (err, data)=>{
         if (err) throw err;
         console.log(chalk.yellow("\nConfirmation of Checkout:\n"));

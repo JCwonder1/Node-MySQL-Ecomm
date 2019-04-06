@@ -18,11 +18,12 @@ DB.prototype.getProductByProductName = function(productSelected){
     return query = `SELECT * FROM products WHERE product_name = "${productSelected}"`;
 };
 
-DB.prototype.reduceInventoryById = function(id, newQuantity){
+DB.prototype.updateInventoryById = function(id, newQuantity){
     //console.log(newQuantity);
     return query = `UPDATE products SET stock_quantity = "${newQuantity}" WHERE item_id = "${id}"`;
 
 }
+
 
 
 
