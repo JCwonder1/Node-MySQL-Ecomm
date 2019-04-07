@@ -18,9 +18,14 @@ DB.prototype.getProductByProductName = function(productSelected){
     return query = `SELECT * FROM products WHERE product_name = "${productSelected}"`;
 };
 
-DB.prototype.reduceInventoryById = function(id, newQuantity){
+DB.prototype.updateInventoryById = function(id, newQuantity){
     //console.log(newQuantity);
     return query = `UPDATE products SET stock_quantity = "${newQuantity}" WHERE item_id = "${id}"`;
+
+}
+
+DB.prototype.addProducts = function(product_name, department, price, qty){
+    return query = `INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES ("${product_name}", "${department}", "${price}", "${qty}")`;
 
 }
 
