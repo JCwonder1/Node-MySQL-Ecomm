@@ -24,7 +24,10 @@ DB.prototype.updateInventoryById = function(id, newQuantity){
 
 }
 
+DB.prototype.addProducts = function(product_name, department, price, qty){
+    return query = `INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES ("${product_name}", "${department}", "${price}", "${qty}")`;
 
+}
 
 
 

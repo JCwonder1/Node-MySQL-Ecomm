@@ -25,7 +25,7 @@ inquirer.prompt([{
     choices: [  "View Products for Sale", 
                 "View Low Inventory", 
                 "Add to Inventory", 
-                "Add New Produce", 
+                "Add New Product", 
                 "Exit"],
     name: "userSelection"
 }]).then(function (res) {
@@ -49,22 +49,27 @@ function productSelected(productSelected) {
             connection.query(db.getAllProducts(), (err, res) => {
                 if (err) throw err;
                 console.log("Low Inventory:")
+                let nothingLowTrigger = true;
                 res.forEach(element => {
                     if(element.stock_quantity <= 2){
+                    nothingLowTrigger = false
                     console.log(`ID: ${element.item_id} || Product Name: ${element.product_name} || Price: ${element.price} || Stock Qty: ${element.stock_quantity}`);
                     }
 
                 });
+                if(nothingLowTrigger){
+                    console.log("No low inventory.")
+                }
                 welcomeMessage();
             })
         break;
-        case("Add to Inventory"):
-        console.log("In Add Inventoyr");
+        case"Add to Inventory":
+        
         addToInventory();
             
         break;
-        case productSelected === "Add New Produce":
-            console.log("Add New Produce")
+        case"Add New Product":
+            addNewProduct();
         break;
         case "Exit":
             process.exit();
@@ -108,8 +113,16 @@ function addQtyInput(productName){
     inquirer.prompt([{
         type: "input",
         message: "How many would you like to add?",
+        validate: function(input){
+            if (input <= 0) {
+                console.log("\n Please enter a number higher than 0");    
+            }else{
+                return true;
+            }
+        },
         name: "qtyToAdd"
     }]).then(res=>{
+        let parsedQty = parseInt(res.qtyToAdd);
         let query = db.getProductByProductName(productName);
         connection.query(query, (err, data)=>{
             if (err) throw err;
@@ -121,7 +134,44 @@ function addQtyInput(productName){
                 welcomeMessage();
             });
         });
+    
     });
 };
+
+function addNewProduct(){
+    console.log("In Function Add New Product");
+    inquirer.prompt([{
+        type: "input",
+        message: "Please enter the product title:",
+        name: "product_name"
+    },
+    {
+        type: "input",
+        message: "What department does this product belong in?",
+        name: "department"
+    },
+    {
+        type: "input",
+        message: "What is the price?",
+        name: "price"
+    },
+    {
+        type: "input",
+        message: "How many quantities do you want to check into stock?",
+        name: "stock_quantity"
+    }
+]).then(res=>{
+    let query = db.addProducts(res.product_name, res.department, res.price, res.stock_quantity);
+    process.exit;
+    connection.query(query, (err, data)=>{
+        if (err) throw err;
+        console.log(`Added ${data.affectedRows} new product`);
+        welcomeMessage();
+    })
+})
+
+
+
+}
 
 welcomeMessage();
